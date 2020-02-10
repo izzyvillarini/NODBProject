@@ -9,6 +9,7 @@ class App extends React.Component{
     this.state = {
       players : []
     }
+    this.newPlayer = this.newPlayer.bind(this)
     this.saveName = this.saveName.bind (this)
     this.deleteName = this.deleteName.bind(this)
   }
@@ -23,15 +24,14 @@ class App extends React.Component{
     
     newPlayer (player)
     {
-      console.log(player)
-      axios.post('http://localhost:4001/api/players', { player }).then(res => {
+      axios.post('http://localhost:4001/api/players', player ).then(res => {
     this.setState({ player : res.data})
       })
       .catch(err => console.log(err))
     }
     
-    saveName(id,newName){
-      axios.put(`http://localhost:4001/api/players/${id}`,{player : newName}).then(res => {this.setState ({ players: res.data})
+    saveName(id,newName, newPosition){
+      axios.put(`http://localhost:4001/api/players/${id}`,{ player: newName, position: newPosition }).then(res => {this.setState ({ players: res.data})
       })
       .catch(err => console.log(err))
     }
@@ -52,15 +52,15 @@ class App extends React.Component{
     <div className="App">
       <header className="App-header">
       Batting Line Up
-      <Create />
+      <Create newPlayerFn={this.newPlayer} />
       {
-            this.state.players.map(player => (
+            this.state.players.map(player => ( 
               <Player
                 key={player.id}
                 player={player}
                 updatePlayerFn={this.saveName}
                 deletePlayerFn={this.deleteName}
-              />
+                 /> 
             ))
           }
       </header>

@@ -13,16 +13,45 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
+.playersHeader {
+  display: flex;
+  flex-direction: row;
+
+}
+.playersHeader > p {
+margin: 5px ;
+font-size: 1.3rem;
+}
+
+.playersHeader > input {
+
+}
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-items: center;
+  align-items: center;
+  box-sizing: border-box;
+
+}
+
+button {
+  height: 22px;
+  padding: 5px;
+}
+
 
 .App-header {
-  background-color: rgb(224, 224, 24);
+  background-image: url("https://cdn3.sportngin.com/attachments/call_to_action/c90b-127884066/IMG_2197_large.jpeg");
+  background-repeat: no-repeat;
+  background-size: cover;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(40px + 2vmin);
-  color:black;
+  font-size: calc(20px + 2vmin);
+  color:white;
 }
 
 .App-link {

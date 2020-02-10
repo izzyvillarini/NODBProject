@@ -7,6 +7,7 @@ class Create extends Component {
         nameInput : '',
         positionInput : ''
         }
+        this.newPlayer = this.newPlayer.bind(this)
     }
 
     handleChange = (value) => {
@@ -22,12 +23,12 @@ class Create extends Component {
 
     newPlayer = () =>
     { 
-        const player = this.state.nameInput 
-      console.log(player)
-      axios.post('http://localhost:4001/api/players', { player }).then(res => {
-    this.setState({ player : res.data})
-      })
-      .catch(err => console.log(err))
+        let newPlayer = {
+            player: this.state.nameInput,
+            position: this.state.positionInput
+        }
+
+        this.props.newPlayerFn(newPlayer)
     }
         render () {
         return (

@@ -8,21 +8,23 @@ module.exports = {
     },
     postPlayers: (req, res) => {
 
-        const {player} = req.body
+        const {player, position} = req.body
 
-        playerList.push({player, id})
+        playerList.push({player, position, id})
         id++
         res.status(200).send(playerList)
     },
     putPlayers: (req, res) => {
         const {id} = req.params
-        const {player}= req.body
+        const {player, position}= req.body
 
         const index = playerList.findIndex(element => {
             return element.id === +id
         })
 
         playerList[index].player = player
+        playerList[index].position = position
+
         res.status(200).send(playerList)
     },
     deletePlayers: (req, res) => {

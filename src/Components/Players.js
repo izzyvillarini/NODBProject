@@ -7,7 +7,7 @@ class Player extends Component {
          {
             nameInput : '',
             positionInput: '',
-            isEditing: false
+            isEditing: false,
         }
         this.saveName = this.saveName.bind(this)
         this.deleteName = this.deleteName.bind(this)
@@ -19,10 +19,17 @@ class Player extends Component {
         }) 
     }
 
+    handlePosition = (value) => {
+        this.setState ({
+            positionInput: value
+        })
+    }
+
     saveName = () =>
     { 
         const newName = this.state.nameInput || this.props.player.player
-        this.props.updatePlayerFn(this.props.player.id, newName)
+        const newPosition = this.state.positionInput || this.props.player.position
+        this.props.updatePlayerFn(this.props.player.id, newName, newPosition)
         this.isEditing()
       }
 
@@ -36,14 +43,18 @@ class Player extends Component {
 
         render () {
         return (
-            <div>
+            <div className="row">
                 { this.state.isEditing ? 
-                <input placeholder = {this.props.player.player} onChange = {e => this.handleChange(e.target.value)} />
+                <div className="playersHeader" >
+                    <input placeholder = {this.props.player.player} onChange = {e => this.handleChange(e.target.value)} />
+                    <input placeholder = {this.props.player.position} onChange = {e => this.handlePosition(e.target.value)} />
+                </div>
                 :
-                <p onDoubleClick={this.isEditing}>{this.props.player.player}</p>
+                <div className="playersHeader">
+                    <p onDoubleClick={this.isEditing}>{this.props.player.player}</p>
+                    <p onDoubleClick={this.isEditing}>{this.props.player.position}</p>
+                </div>
                 }
-                
-                <input value = {this.props.player.id} onChange = {e => this.handleChange(e.target.value)} />
                 <button onClick = {this.saveName}>save</button>
                 <button onClick = {() => this.deleteName(this.props.player.id)}>delete</button>
             </div>
