@@ -24,12 +24,22 @@ class Player extends Component {
         .catch(err => console.log(err))
       }
 
+      deleteName = () => 
+       { const id = this.state.positionInput
+        const name = this.state.nameInput
+           
+        axios.delete('http://localhost:4001/api/players/' + id, name).then(res => {this.setState ({ players :res.data}) 
+      })
+      .catch(err => console.log(err))
+    }
+
         render () {
         return (
             <div>
                 <input value = {this.state.nameInput} onChange = {e => this.handleChange(e.target.value)} />
                 <input value = {this.state.positionInput} onChange = {e => this.handleChange(e.target.value)} />
                 <button onClick = {this.props.saveName} />
+                <button onClick = {this.props.deleteName} />
             </div>
         )
     }
