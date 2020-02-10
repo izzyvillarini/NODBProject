@@ -34,7 +34,7 @@ class Create extends Component {
             <div>
                 <input value = {this.state.nameInput} onChange = {e => this.handleChange(e.target.value)} />
                 <input value = {this.state.positionInput} onChange = {e => this.handleIdChange(e.target.value)} />
-                <button onClick = {this.newPlayer} />
+                <button onClick = {this.newPlayer}>add</button>
             </div>
         )
     }

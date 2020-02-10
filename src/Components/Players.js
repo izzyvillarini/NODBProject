@@ -5,9 +5,12 @@ class Player extends Component {
         super (props) 
         this.state = 
          {
-        nameInput : props.playerName,
-        positionInput : props.id
+            nameInput : '',
+            positionInput: '',
+            isEditing: false
         }
+        this.saveName = this.saveName.bind(this)
+        this.deleteName = this.deleteName.bind(this)
     }
 
     handleChange = (value) => {
@@ -17,29 +20,32 @@ class Player extends Component {
     }
 
     saveName = () =>
-    { const id = this.state.positionInput
-        const name = this.state.nameInput
-        axios.put('http://localhost:4001/api/players/' + id, name).then(res => {this.setState ({ players: res.data})
-        })
-        .catch(err => console.log(err))
+    { 
+        const newName = this.state.nameInput || this.props.player.player
+        this.props.updatePlayerFn(this.props.player.id, newName)
+        this.isEditing()
       }
 
-      deleteName = () => 
-       { const id = this.state.positionInput
-        const name = this.state.nameInput
-           
-        axios.delete('http://localhost:4001/api/players/' + id, name).then(res => {this.setState ({ players :res.data}) 
-      })
-      .catch(err => console.log(err))
+      deleteName(id) {
+          this.props.deletePlayerFn(id)
+    }
+
+    isEditing = () => {
+        this.setState({isEditing: !this.state.isEditing})
     }
 
         render () {
         return (
             <div>
-                <input value = {this.state.nameInput} onChange = {e => this.handleChange(e.target.value)} />
-                <input value = {this.state.positionInput} onChange = {e => this.handleChange(e.target.value)} />
-                <button onClick = {this.props.saveName} />
-                <button onClick = {this.props.deleteName} />
+                { this.state.isEditing ? 
+                <input placeholder = {this.props.player.player} onChange = {e => this.handleChange(e.target.value)} />
+                :
+                <p onDoubleClick={this.isEditing}>{this.props.player.player}</p>
+                }
+                
+                <input value = {this.props.player.id} onChange = {e => this.handleChange(e.target.value)} />
+                <button onClick = {this.saveName}>save</button>
+                <button onClick = {() => this.deleteName(this.props.player.id)}>delete</button>
             </div>
         )
     }

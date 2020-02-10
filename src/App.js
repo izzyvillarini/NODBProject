@@ -10,6 +10,7 @@ class App extends React.Component{
       players : []
     }
     this.saveName = this.saveName.bind (this)
+    this.deleteName = this.deleteName.bind(this)
   }
 
   componentDidMount() {
@@ -30,12 +31,12 @@ class App extends React.Component{
     }
     
     saveName(id,newName){
-      axios.put('http://localhost:4001/api/players/${id}',{name : newName}).then(res => {this.setState ({ players: res.data})
+      axios.put(`http://localhost:4001/api/players/${id}`,{player : newName}).then(res => {this.setState ({ players: res.data})
       })
       .catch(err => console.log(err))
     }
     
-    deleteName(id) {axios.delete('http://localhost:4001/api/players/${id}').then(res =>{
+    deleteName(id) {axios.delete(`http://localhost:4001/api/players/${id}`).then(res =>{
       this.setState ({ players :res.data}) 
     })
     .catch(err => console.log(err))
@@ -43,17 +44,20 @@ class App extends React.Component{
     
 
   render() {
-    const players = this.state.players
+    // const players = this.state.players'
+
+    this.state.players.map(player => console.log(player.player))
+    
   return (
     <div className="App">
       <header className="App-header">
       Batting Line Up
       <Create />
       {
-            players.map(player => (
-              <Player id = {player.id}
-              key = {player.id}
-                playerName={player.name}
+            this.state.players.map(player => (
+              <Player
+                key={player.id}
+                player={player}
                 updatePlayerFn={this.saveName}
                 deletePlayerFn={this.deleteName}
               />
